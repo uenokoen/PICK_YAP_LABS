@@ -1,0 +1,60 @@
+Лабораторная работа №5
+Программа интерактивный словарик на языке программирования C#
+Код программы:
+using System;
+using System.Collections.Generic;
+
+class DictionaryProgram
+{
+    static void Main()
+    {
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+        while (true)
+        {
+            Console.WriteLine("Выберите действие:");
+            Console.WriteLine("1. Добавить слово и его определение");
+            Console.WriteLine("2. Найти определение слова");
+            Console.WriteLine("3. Выйти из программы");
+
+            string choice = Console.ReadLine();
+
+            if (choice == "1")
+            {
+                Console.Write("Введите слово: ");
+                string word = Console.ReadLine();
+
+                Console.Write("Введите определение: ");
+                string definition = Console.ReadLine();
+
+                dictionary[word] = definition;
+                Console.WriteLine("Слово добавлено в словарь.");
+            }
+            else if (choice == "2")
+            {
+                Console.Write("Введите слово для поиска определения: ");
+                string searchWord = Console.ReadLine();
+
+                if (dictionary.ContainsKey(searchWord))
+                {
+                    Console.WriteLine($"Определение слова '{searchWord}': {dictionary[searchWord]}");
+                }
+                else
+                {
+                    Console.WriteLine($"Слово '{searchWord}' не найдено в словаре.");
+                }
+            }
+            else if (choice == "3")
+            {
+                Console.WriteLine("До свидания!");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Некорректный выбор. Повторите попытку.");
+            }
+
+            Console.WriteLine();
+        }
+    }
+}
