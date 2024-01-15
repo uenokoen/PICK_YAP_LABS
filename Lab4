@@ -1,0 +1,62 @@
+Лабораторная работа №4
+Реализованные классические алгоритмы сортировки, поиска и другие структуры данных на языке F#.
+Код программы:
+
+module SortingAlgorithms =
+
+    // Реализация сортировки пузырьком
+    let bubbleSort (array: int[]) =
+        let n = Array.length array
+        for i = 0 to n - 2 do
+            for j = 0 to n - i - 2 do
+                if array.[j] > array.[j + 1] then
+                    // меняем элементы местами
+                    let temp = array.[j]
+                    array.[j] <- array.[j + 1]
+                    array.[j + 1] <- temp
+
+    // Реализация быстрой сортировки
+    let quickSort (array: int[]) =
+        let rec partition (arr: int[], low: int, high: int) =
+            let pivot = arr.[high]
+            let mutable i = low - 1
+            for j = low to high - 1 do
+                if arr.[j] < pivot then
+                    i <- i + 1
+                    // меняем элементы местами
+                    let temp = arr.[i]
+                    arr.[i] <- arr.[j]
+                    arr.[j] <- temp
+            // меняем элементы местами
+            let temp = arr.[i + 1]
+            arr.[i + 1] <- arr.[high]
+            arr.[high] <- temp
+            i + 1
+
+        let rec sort (arr: int[], low: int, high: int) =
+            if low < high then
+                let pivot = partition(arr, low, high)
+                sort(arr, low, pivot - 1)
+                sort(arr, pivot + 1, high)
+
+        sort(array, 0, Array.length array - 1)
+
+
+Ниже представлено использование этих функций для сортировки массива:
+open System
+
+// Тестирование алгоритмов сортировки
+let testSortingAlgorithms () =
+    let arr = [|64; 34; 25; 12; 22; 11; 90|]
+
+    // Сортировка пузырьком
+    SortingAlgorithms.bubbleSort arr
+    printfn "Отсортированный массив (Сортировка пузырьком): %A" arr
+
+    let arr2 = [|64; 34; 25; 12; 22; 11; 90|]
+
+    // Быстрая сортировка
+   SortingAlgorithms.quickSort arr2
+   printfn "Отсортированный массив (Быстрая сортировка): %A" arr2
+
+testSortingAlgorithms()
